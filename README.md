@@ -122,6 +122,10 @@ python -m vllm.entrypoints.openai.run_batch \
        --enable-chunked-prefill
 ```
 
+### 5. Pushing to HF
+
+In `push_to_hub.py` you can find code to push your model to the HF hub.
+
 ## Credits
 
 If you have been using our artefacts in your study, please feel free to cite us:
