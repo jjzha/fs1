@@ -37,6 +37,7 @@ python -m vllm.entrypoints.openai.run_batch \
        --pipeline-parallel-size 2 \
        --max-model-len 8192 \
        --max-num-seqs 4 \
+       --generation-config vllm \
        --enable-chunked-prefill > $VLLM_LOG &
 
 
