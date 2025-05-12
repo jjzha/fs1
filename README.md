@@ -1,6 +1,7 @@
 # fs1
 
-This codebase accompanies _Improving Factuality during Test-time Scaling_.
+This codebase accompanies _Does Longer Reasoning Improve Factuality in
+Large Language Models?_.
 
 
 ## Requirements
