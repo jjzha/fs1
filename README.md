@@ -1,7 +1,7 @@
 # fs1
 
-This codebase accompanies _Does Longer Reasoning Improve Factuality in
-Large Language Models?_.
+This codebase accompanies _Scaling Reasoning can Improve Factuality in
+Large Language Models_.
 
 
 ## Requirements
