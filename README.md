@@ -132,13 +132,5 @@ In `push_to_hub.py` you can find code to push your model to the HF hub.
 If you have been using our artefacts in your study, please feel free to cite us:
 
 ```
-@misc{zhang2025scalingreasoningimprovefactuality,
-      title={Scaling Reasoning can Improve Factuality in Large Language Models}, 
-      author={Mike Zhang and Johannes Bjerva and Russa Biswas},
-      year={2025},
-      eprint={2505.11140},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2505.11140}, 
-}
+TBA
 ```
