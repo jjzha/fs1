@@ -1,9 +1,9 @@
 #!/bin/bash -l
-#SBATCH --job-name=inference_qwq
-#SBATCH --output=/scratch/project_00000000/test-time-facts-cache/tokenize_%j.out
-#SBATCH --error=/scratch/project_00000000/test-time-facts-cache/tokenize_%j.err
+#SBATCH --job-name=tokenize
+#SBATCH --output=/scratch/project_000000000/cache/tokenize_%j.out
+#SBATCH --error=/scratch/project_000000000/cache/tokenize_%j.err
 #SBATCH --partition=standard-g
-#SBATCH --account=project_00000000
+#SBATCH --account=project_000000000
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=8
@@ -18,9 +18,9 @@
 module use /appl/local/training/modules/AI-20240529/
 module load singularity-userfilesystems singularity-CPEbits
 
-CONTAINER=/scratch/project_00000000/test-time-facts/lumi-pytorch-rocm-6.1.3-python-3.12-pytorch-v2.4.1.sif
+CONTAINER=/scratch/project_000000000/test-time-facts/lumi-pytorch-rocm-6.2.3-python-3.12-pytorch-v2.5.1.sif
 
-SCRATCH=/scratch/project_00000000/test-time-facts-cache
+SCRATCH=/scratch/project_000000000/cache
 export TORCH_HOME=$SCRATCH/.torch-cache
 export HF_HOME=$SCRATCH/.hf-cache
 export TOKENIZERS_PARALLELISM=false
@@ -29,7 +29,7 @@ export HF_TOKEN=""
 mkdir -p $TORCH_HOME $HF_HOME
 
 echo "Starting tokenization script..."
-srun singularity exec -B /scratch/project_00000000/ \
+srun singularity exec -B /scratch/project_000000000/ \
     $CONTAINER \
     bash -c "\$WITH_CONDA; \
     export TORCH_HOME=$TORCH_HOME; \

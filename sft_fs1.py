@@ -34,34 +34,6 @@ from trl import (
     DataCollatorForCompletionOnlyLM
 )
 
-def maybe_insert_system_message(messages, tokenizer):
-    if messages[0]["role"] == "system":
-        return
-
-    # chat template can be one of two attributes, we check in order
-    chat_template = tokenizer.chat_template
-    if chat_template is None:
-        chat_template = tokenizer.default_chat_template
-
-    # confirm the jinja template refers to a system message before inserting
-    if "system" in chat_template:
-        messages.insert(0, {"role": "system", "content": ""})
-
-
-def apply_chat_template(
-        example,
-        tokenizer,
-    ):
-    messages = [
-        {"role": "user", "content": example["prompt"]},
-        {"role": "assistant", "content": example["completion"]}
-    ]
-    # We add an empty system message if there is none
-    maybe_insert_system_message(messages, tokenizer)
-    example["text"] = tokenizer.apply_chat_template(
-        messages, tokenize=False, add_generation_prompt=False
-    )
-
 
 if __name__ == "__main__":
     parser = TrlParser((ScriptArguments, SFTConfig, ModelConfig))
@@ -118,6 +90,10 @@ if __name__ == "__main__":
         instruction_template = "<|im_start|>user"
         response_template = "<|im_start|>assistant\n"
         tokenizer.pad_token = "<|fim_pad|>"
+    elif "Smol" in model_config.model_name_or_path:
+        instruction_template = "<|im_start|>user"
+        response_template = "<|im_start|>assistant\n"
+        tokenizer.pad_token = "<empty_output>"
     elif "Llama" in model_config.model_name_or_path:
         instruction_template = "<|start_header_id|>user<|end_header_id|>"
         response_template = "<|start_header_id|>assistant<|end_header_id|>\n\n"
@@ -135,7 +111,8 @@ if __name__ == "__main__":
     )
     dataset = load_dataset(script_args.dataset_name)
     max_seq_length = training_args.max_seq_length
-    filtered_dataset = dataset.filter(lambda example: example['total_length'] <= max_seq_length)
+    # make sure to only take items smaller than 8,192 tokens and only correct traces (label==1)
+    filtered_dataset = dataset.filter(lambda example: example['total_length'] <= max_seq_length).filter(lambda example: example['label'] == 1)
 
     ################
     # Training
